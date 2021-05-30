@@ -3,6 +3,7 @@ import galleryImages from "./gallery-items.js";
 const refs = {
   galleryContainer: document.querySelector(".js-gallery"),
   lightboxContainer: document.querySelector(".lightbox"),
+  lightboxOverlay: document.querySelector(".lightbox__overlay"),
   closeModalBtn: document.querySelector(".lightbox__button"),
   imageEl: document.querySelector(".lightbox__image"),
 };
@@ -16,8 +17,10 @@ refs.galleryContainer.insertAdjacentHTML("afterbegin", galleryMarkup);
 refs.galleryContainer.addEventListener("click", onGalleryContainerClick);
 
 //обработчик клика на кнопку закрытия
-refs.closeModalBtn.addEventListener("click", onCloseModal);
+refs.closeModalBtn.addEventListener("click", onCloseModalbyBtn);
 
+//обработчик клика на backdrop
+// refs.lightboxOverlay.addEventListener("click", onCloseModalbyBackdop);
 //создаем разметку
 function createGalleryMarkup(imgs) {
   return imgs
@@ -50,8 +53,8 @@ function onGalleryContainerClick(event) {
     return;
   }
 
-  //   const parentImg = event.target.closest(".gallery__link");
-  const parentImg = document.querySelector(".gallery__link");
+  const parentImg = event.target.closest(".gallery__link");
+
   refs.imageEl.src = parentImg.href;
   refs.imageEl.alt = event.target.alt;
 
@@ -61,10 +64,15 @@ function onGalleryContainerClick(event) {
 function onOpenModal() {
   refs.lightboxContainer.classList.add("is-open");
 }
-//закрытие модального окна
-function onCloseModal(event) {
+//закрытие модального окна по кнопке
+function onCloseModalbyBtn(event) {
   refs.lightboxContainer.classList.remove("is-open");
   //Oчистка значения атрибута src элемента img.lightbox__image
   refs.imageEl.src = "";
   refs.imageEl.alt = "";
 }
+//закрытие модального окна по клику на бекдроп
+function onCloseModalbyBackdop(event) {
+  refs.lightboxContainer.classList.remove("is-open");
+}
+//закрытие модального окна по нажатию на 'Escape'
