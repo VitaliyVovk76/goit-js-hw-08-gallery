@@ -17,10 +17,10 @@ refs.galleryContainer.insertAdjacentHTML("afterbegin", galleryMarkup);
 refs.galleryContainer.addEventListener("click", onGalleryContainerClick);
 
 //обработчик клика на кнопку закрытия
-refs.closeModalBtn.addEventListener("click", onCloseModalbyBtn);
+refs.closeModalBtn.addEventListener("click", onCloseModal);
 
 //обработчик клика на backdrop
-// refs.lightboxOverlay.addEventListener("click", onCloseModalbyBackdop);
+refs.lightboxOverlay.addEventListener("click", onCloseModalbyBackdop);
 //создаем разметку
 function createGalleryMarkup(imgs) {
   return imgs
@@ -62,10 +62,12 @@ function onGalleryContainerClick(event) {
 }
 //открытие модального окна
 function onOpenModal() {
+  window.addEventListener("keydown", onEscKeyPress);
   refs.lightboxContainer.classList.add("is-open");
 }
-//закрытие модального окна по кнопке
-function onCloseModalbyBtn(event) {
+//закрытие модального окна
+function onCloseModal(event) {
+  window.removeEventListener("keydown", onEscKeyPress);
   refs.lightboxContainer.classList.remove("is-open");
   //Oчистка значения атрибута src элемента img.lightbox__image
   refs.imageEl.src = "";
@@ -73,6 +75,16 @@ function onCloseModalbyBtn(event) {
 }
 //закрытие модального окна по клику на бекдроп
 function onCloseModalbyBackdop(event) {
-  refs.lightboxContainer.classList.remove("is-open");
+  if (event.currentTarget === event.target) {
+    onCloseModal();
+  }
 }
-//закрытие модального окна по нажатию на 'Escape'
+
+function onEscKeyPress(event) {
+  const ESC_KEY_CODE = "Escape";
+  const isEscKey = event.code === ESC_KEY_CODE;
+
+  if (isEscKey) {
+    onCloseModal();
+  }
+}
