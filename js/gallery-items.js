@@ -1,4 +1,4 @@
-const images = [
+export default [
   {
     preview:
       "https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825__340.jpg",
@@ -63,59 +63,3 @@ const images = [
     description: "Lighthouse Coast Sea",
   },
 ];
-const refs = {
-  galleryContainer: document.querySelector(".js-gallery"),
-  lightboxContainer: document.querySelector(".lightbox"),
-  closeModalBtn: document.querySelector(".lightbox__button"),
-  imageEl: document.querySelector(".lightbox__image"),
-};
-
-const galleryMarkup = createGalleryMarkup(images);
-
-//вставляем разметку в нужное место
-refs.galleryContainer.insertAdjacentHTML("afterbegin", galleryMarkup);
-
-//вешаем обработчик клика на галлерею
-refs.galleryContainer.addEventListener("click", onGalleryContainerClick);
-
-//обработчик клика на кнопку закрытия
-refs.closeModalBtn.addEventListener("click", onCloseModal);
-
-//создаем разметку
-function createGalleryMarkup(imgs) {
-  return imgs
-    .map(({ preview, original, description }) => {
-      return `
-           <li class="gallery__item">
-          <a class="gallery__link" href="${original}">
-            <img
-            class="gallery__image"
-              src="${preview}"
-              data-source="${original}"
-              alt="${description}"
-            />
-          </a>
-        </li>   
-      `;
-    })
-    .join("");
-}
-
-//обработчик клика на картинек в галлерее
-function onGalleryContainerClick(event) {
-  const isGalleryItemEl = event.target.classList.contains("gallery__image");
-
-  if (!isGalleryItemEl) {
-    return;
-  }
-  console.log(event.target);
-  //   refs.imageEl.src = event.target.a.href;
-  onOpenModal();
-}
-
-function onOpenModal() {
-  refs.lightboxContainer.classList.add("is-open");
-}
-function onCloseModal() {
-  refs.lightboxContainer.classList.remove("is-open");
-}
