@@ -21,25 +21,6 @@ refs.closeModalBtn.addEventListener("click", onCloseModal);
 
 //обработчик клика на backdrop
 refs.lightboxOverlay.addEventListener("click", onCloseModalbyBackdop);
-//создаем разметку
-function createGalleryMarkup(imgs) {
-  return imgs
-    .map(({ preview, original, description }) => {
-      return `
-        <li class="gallery__item">
-          <a class="gallery__link" href="${original}">
-            <img
-            class="gallery__image"
-              src="${preview}"
-              data-source="${original}"
-              alt="${description}"
-            />
-          </a>
-        </li>
-      `;
-    })
-    .join("");
-}
 
 //обработчик клика на картинек в галлерее
 function onGalleryContainerClick(event) {
@@ -60,6 +41,26 @@ function onGalleryContainerClick(event) {
 
   onOpenModal();
 }
+//создаем разметку
+function createGalleryMarkup(imgs) {
+  return imgs
+    .map(({ preview, original, description }) => {
+      return `
+        <li class="gallery__item">
+          <a class="gallery__link" href="${original}">
+            <img
+            class="gallery__image"
+              src="${preview}"
+              data-source="${original}"
+              alt="${description}"
+            />
+          </a>
+        </li>
+      `;
+    })
+    .join("");
+}
+
 //открытие модального окна
 function onOpenModal() {
   window.addEventListener("keydown", onEscKeyPress);
@@ -79,7 +80,7 @@ function onCloseModalbyBackdop(event) {
     onCloseModal();
   }
 }
-
+//закрытие модального окна по клику на "Escape"
 function onEscKeyPress(event) {
   const ESC_KEY_CODE = "Escape";
   const isEscKey = event.code === ESC_KEY_CODE;
