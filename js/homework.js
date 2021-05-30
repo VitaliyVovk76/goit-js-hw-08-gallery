@@ -71,8 +71,7 @@ function onCloseModal(event) {
   window.removeEventListener("keydown", onEscKeyPress);
   refs.lightboxContainer.classList.remove("is-open");
   //Oчистка значения атрибута src элемента img.lightbox__image
-  refs.imageEl.src = "";
-  refs.imageEl.alt = "";
+  cleanSrcOfImg();
 }
 //закрытие модального окна по клику на бекдроп
 function onCloseModalbyBackdop(event) {
@@ -87,5 +86,12 @@ function onEscKeyPress(event) {
 
   if (isEscKey) {
     onCloseModal();
+  }
+}
+//
+function cleanSrcOfImg() {
+  if (refs.imageEl.src !== "") {
+    refs.imageEl.src = "";
+    refs.imageEl.alt = "";
   }
 }
